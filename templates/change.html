@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Formulario de cambio de contraseña
+{% endblock title %}
+
+{% block content %}
+    <h2>Formulario de cambio de contraseña</h2>
+    <p>Ingrese su nueva contraseña.</p>
+    <hr>
+    <form action="{% url 'change' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="username" value={{ username }}>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Contraseña</label>
+                <input class="form-control" type="password" name="password" placeholder="Ingrese la contraseña">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Confirmación de la contraseña</label>
+                <input class="form-control" type="password" name="re-password" placeholder="Reingrese la contraseña">
+            </div>
+        </div>
+        <button class="btn btn-secondary" type="submit">Cambiar contraseña</button>
+        <a class="btn btn-primary" href="{% url 'index' %}">Inicio</a>
+    </form>
+{% endblock content %}

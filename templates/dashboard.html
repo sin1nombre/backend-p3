@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Panel de control
+{% endblock title %}
+
+{% block content %}
+    <h2>Panel de control</h2>
+
+    {% if user.is_authenticated %}
+        <p>Hola, {{ user.username }}! Aquí puedes acceder a tus configuraciones y estadísticas.</p>
+
+        {% if user.is_superuser %}
+            <div class="admin-section">
+                <p>Bienvenido, administrador! Aquí puedes gestionar usuarios y configuraciones del sistema.</p>
+                <p><a href="{% url 'admin:index' %}">Ir al panel de administración</a></p>
+
+                {% if users %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre de usuario</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Correo electrónico</th>
+                                <th>Fecha de registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for u in users %}
+                                <tr>
+                                    <td>{{ u.username }}</td>
+                                    <td>{{ u.first_name }}</td>
+                                    <td>{{ u.last_name }}</td>
+                                    <td>{{ u.email }}</td>
+                                    <td>{{ u.date_joined|date:"d/m/Y H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No hay usuarios registrados.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Cerrar sesión</button>
+        </form>
+
+    {% else %}
+        <p>Por favor, inicia sesión para acceder al panel de control.</p>
+        <a href="{% url 'login' %}">Iniciar sesión</a>
+    {% endif %}
+{% endblock content %}

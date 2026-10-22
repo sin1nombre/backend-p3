@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Formulario de registro
+{% endblock title %}
+
+{% block content %}
+    <h2>Formulario de registro</h2>
+    <p>Ingrese sus datos para registrarse. Si ya tiene una cuenta, <a href="{% url 'login' %}">inicie sesión</a>.</p>
+    <hr>
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Nombre</label>
+                <input class="form-control" type="text" name="first_name" placeholder="Ingrese su nombre">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Apellido</label>
+                <input class="form-control" type="text" name="last_name" placeholder="Ingrese su apellido">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                <label class="form-label">Correo electrónico</label>
+                <input class="form-control" type="email" name="email" placeholder="Ingrese su correo electrónico">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Contraseña</label>
+                <input class="form-control" type="password" name="password" placeholder="Ingrese la contraseña">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Confirmación de la contraseña</label>
+                <input class="form-control" type="password" name="re-password" placeholder="Reingrese la contraseña">
+            </div>
+        </div>
+        <button class="btn btn-secondary" type="submit">Registrarse</button>
+        <a class="btn btn-primary" href="{% url 'index' %}">Inicio</a>
+    </form>
+{% endblock content %}
